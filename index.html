@@ -3,43 +3,84 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Suzune GitHub Pages Test</title>
-    <meta name="description" content="GitHub Pages 測試頁面" />
+    <title>Screen Wake Lock API 測試</title>
+    <meta
+      name="description"
+      content="用 GitHub Pages 測試 Screen Wake Lock API 是否能防止手機自動鎖定。"
+    />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main class="card">
-      <p class="eyebrow">GitHub Pages 測試</p>
-      <h1>主人，網頁成功上線了。</h1>
+      <p class="eyebrow">Screen Wake Lock API 測試</p>
+      <h1>主人，這頁是拿來測手機會不會自動鎖定。</h1>
       <p class="lead">
-        這是一個用 GitHub 提供的免費靜態網頁空間部署的小測試頁。
+        如果瀏覽器支援 <code>navigator.wakeLock</code>，並且頁面保持前景，啟用後應可避免螢幕自動熄滅或自動鎖定。
       </p>
 
+      <section class="panel status-panel">
+        <div class="status-row">
+          <span class="label">API 支援</span>
+          <strong id="supportStatus" class="pill pending">檢查中</strong>
+        </div>
+        <div class="status-row">
+          <span class="label">Wake Lock 狀態</span>
+          <strong id="lockStatus" class="pill pending">尚未請求</strong>
+        </div>
+        <div class="status-row">
+          <span class="label">頁面狀態</span>
+          <strong id="pageStatus" class="pill info">可見中</strong>
+        </div>
+        <p id="message" class="message">
+          頁面載入後會檢查支援狀態。請用手機瀏覽器開啟，然後按下「啟用防鎖定測試」。
+        </p>
+      </section>
+
+      <section class="actions">
+        <button id="acquireBtn" class="button primary" type="button">
+          啟用防鎖定測試
+        </button>
+        <button id="releaseBtn" class="button secondary" type="button" disabled>
+          解除 Wake Lock
+        </button>
+      </section>
+
       <section class="grid">
-        <article>
-          <h2>這頁做了什麼</h2>
+        <article class="panel">
+          <h2>預期效果</h2>
           <ul>
-            <li>建立公開 GitHub repo</li>
-            <li>推送靜態檔案</li>
-            <li>啟用 GitHub Pages</li>
-            <li>驗證公開網址可讀取</li>
+            <li>頁面保持前景時，螢幕不應因閒置而自動熄滅。</li>
+            <li>手機不應因閒置而自動進入鎖定畫面。</li>
+            <li>如果切到背景、切分頁或省電限制介入，Wake Lock 可能被釋放。</li>
           </ul>
         </article>
 
-        <article>
-          <h2>頁面資訊</h2>
+        <article class="panel">
+          <h2>實測方式</h2>
+          <ol>
+            <li>用手機開這個頁面。</li>
+            <li>按「啟用防鎖定測試」。</li>
+            <li>把手機放著，超過平常自動鎖定時間。</li>
+            <li>如果螢幕仍亮著，代表效果符合預期。</li>
+          </ol>
+        </article>
+
+        <article class="panel">
+          <h2>限制與注意</h2>
           <ul>
-            <li>Repo：<code>Suzune-maid/pages-test-20260427-114953</code></li>
-            <li>Branch：<code>main</code></li>
-            <li>Source：<code>/ (root)</code></li>
-            <li>建立時間：<code>2026-04-27 11:49:53 CST</code></li>
+            <li>必須是 HTTPS 頁面，GitHub Pages 符合這個條件。</li>
+            <li>通常需要使用者互動後才會成功請求。</li>
+            <li>不同手機／瀏覽器支援度不同，iPhone Safari 常比 Android Chrome 更受限。</li>
+            <li>手動按電源鍵或系統極端省電時，它不一定能阻止關閉螢幕。</li>
           </ul>
         </article>
       </section>
 
       <footer>
-        <span>Made by 鈴音 for 主人 ✨</span>
+        <span>GitHub Pages Wake Lock Test for 主人 ✨</span>
       </footer>
     </main>
+
+    <script src="app.js"></script>
   </body>
 </html>
